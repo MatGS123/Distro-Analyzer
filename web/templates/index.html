@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DistroAnalyzer - Encuentra tu distro ideal</title>
+
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+  <!-- three.js (REQUERIDO por Vanta) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- Vanta NET -->
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
+  <style>
+    /* contenedor del fondo */
+    #vanta-bg {
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    /* mejora legibilidad */
+    .container {
+      background: rgba(10, 15, 30, 0.78);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="vanta-bg">
+    <div class="container">
+
+      <header>
+        <h1>🐧 DistroAnalyzer</h1>
+        <p class="tagline">Encuentra la distribución de Linux perfecta para ti</p>
+      </header>
+
+      <main>
+        <div class="card">
+          <h2>Analizar perfil de GitHub</h2>
+          <p class="description">
+            Ingresa tu username de GitHub y descubriremos qué distro se adapta mejor a tu perfil.
+          </p>
+
+          <form
+            hx-post="/analyze"
+            hx-target="#result"
+            hx-indicator="#loading"
+            class="analyze-form"
+          >
+            <div class="form-group">
+              <label for="username">GitHub Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="octocat"
+                required
+                autofocus
+              >
+            </div>
+
+            <button type="submit" class="btn-primary">
+              Analizar perfil
+            </button>
+
+            <div id="loading" class="loading htmx-indicator">
+              <div class="spinner"></div>
+              <p>Analizando perfil...</p>
+            </div>
+          </form>
+        </div>
+
+        <div id="result"></div>
+
+        <div class="info-section">
+          <h3>¿Cómo funciona?</h3>
+          <ul>
+            <li> Recolectamos datos públicos de GitHub</li>
+            <li> Analizamos tu stack tecnológico</li>
+            <li> Matching con distros</li>
+            <li> Recomendación personalizada</li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <a href="/history">Ver historial</a>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- INIT VANTA -->
+    <script>
+    VANTA.CELLS({
+    el: "#vanta-bg",
+    mouseControls: false,
+    touchControls: false,
+    gyroControls: false,
+    minHeight: 200,
+    minWidth: 200,
+    scale: 1,
+    scaleMobile: 1,
+    color1: 0x50061,
+    color2: 0x7eb3,
+    size: 2,
+    speed: 1
+    })
+  </script>
+</body>
+</html>
+

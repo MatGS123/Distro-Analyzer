@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial - DistroAnalyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Historial de análisis</h1>
+            <a href="/" class="back-link">← Volver al inicio</a>
+        </header>
+
+        <main>
+            {{ if .Profiles }}
+            <div class="history-list">
+                {{ range .Profiles }}
+                <div class="history-item">
+                    <div class="history-header">
+                        <h3>{{ .Username }}</h3>
+                        <span class="badge badge-{{ .Result.Category }}">
+                            Score: {{ .Result.Score }}
+                        </span>
+                    </div>
+
+                    <div class="history-meta">
+                        <span>📅 {{ .CreatedAt.Format "02/01/2006 15:04" }}</span>
+                        <span>📍 {{ .Source }}</span>
+                    </div>
+
+                    <p class="history-explanation">{{ .Result.Explanation }}</p>
+
+                    <div class="history-tags">
+                        {{ range .Signals.TechStack }}
+                        <span class="tag-small">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+            {{ else }}
+            <div class="empty-state">
+                <p>No hay perfiles analizados aún.</p>
+                <a href="/" class="btn-primary">Analizar primer perfil</a>
+            </div>
+            {{ end }}
+        </main>
+    </div>
+</body>
+</html>

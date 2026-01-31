@@ -1,0 +1,96 @@
+<div class="result-card">
+    <div class="result-header">
+        <h2>Resultado para {{ .Profile.Username }}</h2>
+        <span class="badge badge-{{ .Profile.Result.Category }}">
+            {{ if eq .Profile.Result.Category "strong_fit" }}
+                ✨ Excelente Match
+            {{ else if eq .Profile.Result.Category "potential" }}
+                🎯 Match Potencial
+            {{ else }}
+                ℹ️ Match Bajo
+            {{ end }}
+        </span>
+    </div>
+
+    <!-- Título de recomendación -->
+    <div class="recommendation">
+        <h1>🐧 Recomendación: {{ .Profile.Recommendation.DistroName }}</h1>
+    </div>
+
+    <!-- SCORE Y LOGO LADO A LADO -->
+    <div class="score-and-logo-container">
+        <div class="score-section">
+            <div class="score-circle">
+                <div class="score-number">{{ .Profile.Result.Score }}</div>
+                <div class="score-label">/ 100</div>
+            </div>
+            <div class="confidence">
+                Confianza: {{ printf "%.0f" (mul .Profile.Result.Confidence 100) }}%
+            </div>
+        </div>
+
+        <div class="distro-logo">
+            <img
+              src="/static/distros/512/512_{{ .Profile.Recommendation.DistroID }}.png"
+              alt="{{ .Profile.Recommendation.DistroName }}"
+              loading="lazy"
+              onerror="this.onerror=null; this.src='/static/distros/512_generic.png';"
+            >
+        </div>
+    </div>
+
+    <!-- Resto del contenido igual -->
+    <div class="explanation">
+        <h3>📝 Explicación</h3>
+        <p>{{ .Profile.Result.Explanation }}</p>
+    </div>
+
+    <div class="signals-section">
+        <h3>🔍 Señales detectadas</h3>
+
+        <div class="signal-group">
+            <h4>Tech Stack</h4>
+            <div class="tags">
+                {{ range .Profile.Signals.TechStack }}
+                <span class="tag">{{ . }}</span>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="signal-group">
+            <h4>Topics</h4>
+            <div class="tags">
+                {{ range .Profile.Signals.Topics }}
+                <span class="tag tag-topic">{{ . }}</span>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="signal-group">
+            <h4>Nivel de experiencia</h4>
+            <span class="badge badge-exp">{{ .Profile.Signals.ExperienceLevel }}</span>
+        </div>
+
+        <div class="signal-group">
+            <h4>Sentimiento</h4>
+            <span class="badge badge-sentiment">{{ .Profile.Signals.Sentiment }}</span>
+        </div>
+    </div>
+
+    <div class="raw-data">
+        <details>
+            <summary>Ver datos recolectados</summary>
+            <div class="raw-content">
+                <p><strong>Bio:</strong> {{ .Profile.RawData.Bio }}</p>
+                <p><strong>Website:</strong> {{ .Profile.RawData.Website }}</p>
+                <p><strong>Location:</strong> {{ .Profile.RawData.Location }}</p>
+                <p><strong>Repositorios:</strong> {{ len .Profile.RawData.Repositories }}</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="actions">
+        <a href="/" class="btn-secondary">Analizar otro perfil</a>
+        <a href="/history" class="btn-secondary">Ver historial</a>
+    </div>
+</div>

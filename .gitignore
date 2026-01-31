@@ -1,0 +1,22 @@
+# Binarios
+distroanalyzer
+*.exe
+
+# DB local
+data/*.db
+
+# Cache / runtime
+cache/
+tmp/
+
+# Go
+vendor/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+.env
